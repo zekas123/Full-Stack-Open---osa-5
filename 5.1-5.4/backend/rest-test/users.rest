@@ -1,0 +1,41 @@
+@base = http://localhost:3003/api
+
+### Все пользователи (с их блогами)
+GET {{base}}/users
+
+### Создать пользователя
+# @name newUser
+POST {{base}}/users
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "name": "New User",
+  "password": "secret123"
+}
+
+### Пользователь по id
+GET {{base}}/users/{{newUser.response.body.id}}
+
+### Слишком короткий username — 400
+POST {{base}}/users
+Content-Type: application/json
+
+{
+  "username": "ab",
+  "name": "Too Short",
+  "password": "secret123"
+}
+
+### Дубликат username — 400
+POST {{base}}/users
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "name": "Duplicate",
+  "password": "secret123"
+}
+
+### Health-check
+GET {{base}}/health
