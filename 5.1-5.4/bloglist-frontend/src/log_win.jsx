@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function LoginForm({ setUser }) {
+function LoginForm({ setUser, setMessage }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -28,8 +28,8 @@ function LoginForm({ setUser }) {
       setUsername('');
       setPassword('');
     } catch (error) {
-      console.error('Ошибка авторизации:', error);
-      alert(error.message);
+      console.error('Login failed:', error);
+      if (setMessage) setMessage('Wrong username or password');
     }
   };
 
