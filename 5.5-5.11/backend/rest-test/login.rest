@@ -1,0 +1,35 @@
+@base = http://localhost:3003/api
+
+### Регистрация пользователя
+# @name register
+POST {{base}}/users
+Content-Type: application/json
+
+{
+  "username": "mluukkai",
+  "name": "Matti Luukkainen",
+  "password": "salainen"
+}
+
+### Логин — токен подставляется в следующие запросы
+# @name login
+POST {{base}}/login
+Content-Type: application/json
+
+{
+  "username": "mluukkai",
+  "password": "salainen"
+}
+
+### Текущий пользователь по токену
+GET {{base}}/me
+Authorization: Bearer {{login.response.body.token}}
+
+### Проверка неверного пароля — 401
+POST {{base}}/login
+Content-Type: application/json
+
+{
+  "username": "mluukkai",
+  "password": "wrong-password"
+}

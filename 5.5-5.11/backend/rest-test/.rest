@@ -1,0 +1,28 @@
+@base = http://localhost:3003/api
+
+### логин
+# @name login
+POST {{base}}/login
+Content-Type: application/json
+
+{ "username": "mluukkai", "password": "salainen" }
+
+### создать
+# @name createBlog
+POST {{base}}/blogs
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.$.token}}
+
+{ "title": "React patterns", "author": "Edsger W. Dijkstra", "url": "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html", "likes": 7 }
+
+### заменить (токен только в заголовке!)
+PUT {{base}}/blogs/{{createBlog.response.body.$.id}}
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.$.token}}
+
+{
+  "title": "React patterns (2nd edition)",
+  "author": "Edsger W. Dijkstra",
+  "url": "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+  "likes": 9
+}
